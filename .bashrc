@@ -25,11 +25,11 @@ set -o ignoreeof    # disable ^D for logout
 shopt -s nocaseglob # enable case-insensitive filename globbing
 
 # prompts
-# PS1='$({ [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY"  ]; } && echo -n "\[\e[38;5;32m\]ssh\[\e[m\] ")\[\e[38;5;3m\]\W\[\e[0m\] $ '
-PS1=
-PS1+="$({ [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; } && printf "\[\e[38;5;32m\]ssh\[\e[m\] ")"
-PS1+='[\[\e[38;5;7m\]\u\[\e[0m\]@\[\e[38;5;98m\]\H\[\e[0m\] \[\e[38;5;3m\]\W\[\e[0m\]]$ '
 PROMPT_COMMAND='printf "\033]0;%s\007" "arch: ${PWD/#${HOME}/\~}"'
+PS1="$({ [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; } && printf "\[\e[38;5;32m\]ssh\[\e[m\] ")"
+PS1+='[\[\e[38;5;7m\]\u\[\e[0m\]'
+PS1+='@\[\e[38;5;98m\]\H\[\e[0m\]'
+PS1+=' \[\e[38;5;3m\]\W\[\e[0m\]]$ '
 
 # history
 export HISTCONTROL="${HISTCONTROL}${HISTCONTROL+:}ignoredups:erasedups"
@@ -47,7 +47,7 @@ unset HISTFILE
 
 # using wsl-open as browser
 if [[ $(uname -r) =~ (m|M)icrosoft ]]; then
-	[[ -z $BROWSER ]] && export BROWSER=wsl-open || export BROWSER=$BROWSER:wsl-open
+	[[ -z $BROWSER ]] && { export BROWSER=wsl-open || export BROWSER=$BROWSER:wsl-open; }
 fi
 
 # dotnet
