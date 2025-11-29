@@ -2,7 +2,7 @@
 # ~/.bash_functions
 #
 
-listpath() {
+path() {
 	local SPLITPATH
 	IFS=: read -r -a SPLITPATH <<<"$PATH" && for path in "${SPLITPATH[@]}"; do echo "$path":; done
 }
