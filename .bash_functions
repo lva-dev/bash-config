@@ -5,8 +5,17 @@
 # Usage: path
 # Prints the paths in PATH, split by newlines.
 function path() {
-	local SPLITPATH
-	IFS=: read -r -a SPLITPATH <<<"$PATH" && for path in "${SPLITPATH[@]}"; do echo "$path":; done
+	local split_path
+  
+	IFS=: read -r -a split_path <<<"$PATH"
+  if [[ $! != 0 ]]; then
+    echo -e "error: " >&2
+    return 1
+  fi
+  
+  for path in "${SPLITPATH[@]}"; do
+    echo "$path"
+  done
 }
 
 # Usage: newf <path>
@@ -14,10 +23,13 @@ function path() {
 function newf() {
   for path in "$@"; do
     if [[ -f "$path" ]]; then
-      echo "warning: file '${path}' already exists"
+      echo -e "error: file '$path' already exists"
       return 1
     elif [[ -d "$path" ]]; then
-      echo "warning: '${path}' is a directory"
+      echo -e "error: '$path' is a directory"
+      return 1
+    elif [[ -e "$path" ]]; then
+      echo -e "error: path '$path' already exists"
       return 1
     fi
 
