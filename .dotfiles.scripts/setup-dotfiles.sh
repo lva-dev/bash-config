@@ -13,7 +13,8 @@ elif [[ -n "$input" && "$input" != 'y' && "$input" != 'Y' ]]; then
   exit 1
 fi
 
-find ./.dotfiles/ -name '.*' ! -wholename '*.git/*' -type f -exec cp -f {} ~ \;
+find ./.dotfiles/ ! -wholename '*/.git/*' ! -wholename '*/.dotfiles.scripts/*' -type f -exec cp -f {} ~ \;
+
 if [[ $? != 0 ]]; then
     "error: failed to create/write dotfiles"
     exit 1
