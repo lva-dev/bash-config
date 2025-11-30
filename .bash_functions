@@ -5,45 +5,37 @@
 # Usage: path
 # Prints the paths in PATH, split by newlines.
 function path() {
-	local split_path
-  
-	IFS=: read -r -a split_path <<<"$PATH"
-  if [[ $! != 0 ]]; then
-    echo -e "error: " >&2
-    return 1
-  fi
-  
-  for path in "${SPLITPATH[@]}"; do
-    echo "$path"
-  done
+	while IFS= read -r path; do
+		echo "$path"
+	done <<<"$PATH"
 }
 
 # Usage: newf <path>
 # Creates a new file.
 function newf() {
-  for path in "$@"; do
-    if [[ -f "$path" ]]; then
-      echo -e "error: file '$path' already exists"
-      return 1
-    elif [[ -d "$path" ]]; then
-      echo -e "error: '$path' is a directory"
-      return 1
-    elif [[ -e "$path" ]]; then
-      echo -e "error: path '$path' already exists"
-      return 1
-    fi
+	for path in "$@"; do
+		if [[ -f "$path" ]]; then
+			echo -e "error: file '$path' already exists"
+			return 1
+		elif [[ -d "$path" ]]; then
+			echo -e "error: '$path' is a directory"
+			return 1
+		elif [[ -e "$path" ]]; then
+			echo -e "error: path '$path' already exists"
+			return 1
+		fi
 
-    mkdir -p "$(dirname "$path")" && touch "$path"
-  done
+		mkdir -p "$(dirname "$path")" && touch "$path"
+	done
 }
 
-# Usage:
-#   cd
-#   cd <dir>
-#   cd [(-|+)[N]]
-#   cd --
+# Usage: cd
+#        cd <dir>
+#        cd [(-|+)[N]]
+#        cd --
 # A better cd.
-# Author: Petar Marinov, http:/geocities.com/h2428, this is public domain
+# Author:
+#   Petar Marinov, http:/geocities.com/h2428, public domain
 function cd() {
 	local x2 the_new_dir adir index
 	local -i cnt

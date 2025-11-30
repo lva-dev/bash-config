@@ -36,4 +36,5 @@ command -v trash >/dev/null && alias rm='echo "\"rm\" has been disabled. Use \"t
 command -v clang >/dev/null && alias cc='clang'
 command -v xclip >/dev/null && alias clip='xclip -selection clipboard'
 alias gdb='gdb -q'
+alias emacs='emacs -nw'
 alias google-chrome='google-chrome --profile-directory=Default'
