@@ -29,6 +29,26 @@ function newf() {
 	done
 }
 
+# Usage: colors
+# Prints some basic terminal colors.
+function colors() (
+	function pcolor() {
+		n="$1"
+		fg=$((0 + n))
+		bg=$((10 + n))
+		echo -ne "\e[${fg}m${fg}\e[m "
+		echo -ne "\e[${bg}m${bg}\e[m\n"
+	}
+
+	for n in {30..37}; do
+		pcolor "$n"
+	done
+
+	for n in {90..97}; do
+		pcolor "$n"
+	done
+)
+
 # Usage: cd
 #        cd <dir>
 #        cd [(-|+)[N]]
