@@ -29,7 +29,7 @@ for file in "${files[@]}"; do
   mkdir -p "$parent"
   real="$(realpath "$file")"
   relative="./${real#"$HOME/.dotfiles/"}"
-  echo "copying '$relative'..."
+  echo "copying to '$relative'..."
   cp -f "$file" "$relative" 
 done
 
